@@ -5,7 +5,6 @@ import Homepage from './containers/Homepage';
 import Search from './containers/Search';
 import Bookmark from './containers/Bookmark';
 import Heading from './containers/Heading';
-import rotateAction from '../store/actions/rotateAction';
 
 import {
   BrowserRouter as Router,
@@ -42,12 +41,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state
-});
-
-const mapDispatchToProps = dispatch => ({
-  rotateAction: (payload) => dispatch(rotateAction(payload))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

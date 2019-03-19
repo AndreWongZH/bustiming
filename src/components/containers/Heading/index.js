@@ -42,17 +42,17 @@ class Heading extends Component {
             >
               <Container>
                 <Link to='/'>
-                  <Menu.Item as='a' active={true}>
+                  <Menu.Item as='div' active={true}>
                     Homepage
                   </Menu.Item>
                 </Link>
                 <Link to='/search'>
-                  <Menu.Item as='a' >
+                  <Menu.Item as='div' >
                     Search
                   </Menu.Item>
                 </Link>
                 <Link to='/bookmark'>
-                  <Menu.Item as='a' >
+                  <Menu.Item as='div' >
                     Bookmarks
                   </Menu.Item>
                 </Link>

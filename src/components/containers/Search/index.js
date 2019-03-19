@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
 	Button,
 	Icon
@@ -6,6 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Busservice from './Busservice';
+import { saveBusstop } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -46,26 +48,36 @@ class Search extends Component {
 	constructor() {
 		super();
 		this.state = {
-			busNumber: 0
+			savedBookmark: false
 		}
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 
 	handleClick(e) {
-		console.log(this.props.location.state.referrer);
+		const { savedBookmark } = this.state;
+		const { number } = this.props.currentBusstop;
+
+		if (savedBookmark) {
+			this.props.removeBusstop({ number })
+			this.setState({ savedBookmark: false })
+		} else {
+			this.props.saveBusstop({ number });
+			this.setState({ savedBookmark: true });
+		}
 	}
 
 	render() {
-		const { BusStopCode, Services } = this.props.location.state.referrer;
+		const { savedBookmark } = this.state;
+		const { number, data } = this.props.currentBusstop;
 		return (
 			<CenteredDiv>
 				<StyledDiv>
-					<h1>Bus Stop #{BusStopCode}</h1>
-					<StyledIcon name='star outline' size='big' onClick={this.handleClick} />
+					<h1>Bus Stop #{number}</h1>
+					<StyledIcon name={savedBookmark ? 'star' : 'star outline'} color='yellow' size='big' onClick={this.handleClick} />
 				</StyledDiv>
 				<StyledBody>
-					<Busservice data={Services} />
+					<Busservice data={data.Services} />
 				</StyledBody>
 				<Link to='/'>
 					<StyledButton>
@@ -77,4 +89,12 @@ class Search extends Component {
 	}
 }
 
-export default Search;
+const matchStateToProps = state => {
+	return { currentBusstop: state.currentBusstop }
+}
+
+const matchDispatchToProps = dispatch => ({
+	saveBusstop: (payload) => dispatch(saveBusstop(payload))
+});
+
+export default connect(matchStateToProps, matchDispatchToProps)(Search);

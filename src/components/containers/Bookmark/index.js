@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
 	Button,
 	Icon
@@ -37,15 +38,26 @@ class Bookmark extends Component {
 		this.state = {
 			busNumber: 0
 		}
+		this.handlesubmit = this.handlesubmit.bind(this);
+	}
+
+	handlesubmit(e) {
+		console.log(this.props);
 	}
 
 	render() {
+		const savedBusstopComponent = this.props.savedBusstop.map(busstop => (
+			<div>
+				<h1>{busstop.number}</h1>
+			</div>
+		))
 		return (
 			<CenteredDiv>
 				<StyledDiv>
-					<h1>Bookmarks</h1>
+					<h1 onClick={this.handlesubmit}>Bookmarks</h1>
 					<StyledBody>
 						All Saved bus here.
+						{savedBusstopComponent}
 					</StyledBody>
 				</StyledDiv>
 			</CenteredDiv>
@@ -53,4 +65,8 @@ class Bookmark extends Component {
 	}
 }
 
-export default Bookmark;
+const matchStateToProps = state => {
+	return { savedBusstop: state.savedBusstop }
+};
+
+export default connect(matchStateToProps, null)(Bookmark);

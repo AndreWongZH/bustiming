@@ -8,7 +8,7 @@ import {
 	Form
 } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { addArticle } from '../../../store/actions';
+import { currentBusstop } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -31,41 +31,47 @@ class Homepage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			busNumber: '',
-			redirect: false,
-			apiData: {}
+			busstopNumber: '',
+			redirect: false
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange = (e) => {
-		this.setState({ busNumber: e.target.value })
+		this.setState({ busstopNumber: e.target.value })
 	}
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
-		const { busNumber } = this.state;
-		this.props.addArticle({ busNumber });
-		this.setState({ busNumber: '' });
-		const BusstopData = await axios.get('http://localhost:5000/api/busNumber', {
+		const { busstopNumber } = this.state;
+		const { currentBusstop } = this.props;
+
+		
+		const BusstopData = await axios.get('http://localhost:5000/api/busstopNumber', {
 			params: {
-				busNumber
+				busstopNumber
 			}
 		})
-		if (BusstopData.status === 200) {
-			this.setState({ redirect: true, apiData:BusstopData.data });
+		const sendData = await {
+			number: busstopNumber,
+			data: BusstopData.data
 		}
+		currentBusstop(sendData);
+		await this.setState({ busstopNumber: '' });
+		if (BusstopData.status === 200) {
+			this.setState({ redirect: true });
+		}		
 	}
 
 	render() {
-		const element = this.props.articles.map(el => (
-			<div>
-				<h1>{el.busNumber}</h1>
-			</div>
-		))
+		// const element = this.props.articles.map(el => (
+		// 	<div>
+		// 		<h1>{el.busstopNumber}</h1>
+		// 	</div>
+		// ))
 		
-		const { busNumber, redirect, apiData } = this.state;
+		const { busstopNumber, redirect } = this.state;
 
 		return (
 			<CenteredDiv>
@@ -73,8 +79,7 @@ class Homepage extends Component {
 					<Redirect
 						push
 						to={{
-							pathname: '/search',
-							state: { referrer: apiData }
+							pathname: '/search'
 						}}
 					/>
 				)}
@@ -83,26 +88,19 @@ class Homepage extends Component {
 					<Input
 						focus
 						placeholder='Enter bus stop number here'
-						value={busNumber}
+						value={busstopNumber}
 						onChange={this.handleChange}
 					 />
 					<br />
 					<Button content='Submit' />
-					{element}
 				</StyledDiv>
 			</CenteredDiv>
 		)
 	}
 }
 
-const mapStateToProps = (state) => {
-	return { articles: state.articles };
-};
+const matchDispatchToProps = dispatch => ({
+	currentBusstop: (payload) => dispatch(currentBusstop(payload))
+})
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		addArticle: (article) => dispatch(addArticle(article))
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
+export default connect(null, matchDispatchToProps)(Homepage);
