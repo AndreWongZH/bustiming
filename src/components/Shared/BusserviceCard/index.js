@@ -13,7 +13,7 @@ const BusserviceCard = ({ service }) => {
 			const EndStop = service[key].DestinationCode ? service[key].DestinationCode : 'No Data';
 			const BusRank = key.slice(-1) === 's' ? '1' : key.slice(-1);
 			return(
-				<Card>
+				<Card key={key}>
 					<Card.Content>
 						<Card.Header>Bus {BusRank}</Card.Header>
 						<Card.Description>

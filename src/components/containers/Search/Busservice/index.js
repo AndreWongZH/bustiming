@@ -9,7 +9,7 @@ const StyledBusserviceCard = styled.div`
 
 const Busservice = ({ data }) => {
 	const BusserviceCardComp = data.map(service => (
-		<BusserviceCard service={service} />
+		<BusserviceCard key={service.ServiceNo} service={service} />
 	))
 	return (
 		<StyledBusserviceCard>
