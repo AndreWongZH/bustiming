@@ -2,24 +2,29 @@ import React, { Component } from 'react';
 import {
   Responsive,
   Visibility,
-  Segment,
   Menu,
   Container,
   Button
 } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import HeaderBar from '../../Shared/HeaderBar';
 
 class Heading extends Component {
+  constructor() {
+    super()
+    this.state = {
+
+    }
+  }
   state = {}
 
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
 
   render() {
-    const { children } = this.props
+    const { children, currentPage } = this.props
     const { fixed } = this.state
-
+    
     return (
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
@@ -27,47 +32,34 @@ class Heading extends Component {
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
         >
-          <Segment
-            inverted
-            textAlign='center'
-            style={{ minHeight: 700, padding: '1em 0em' }}
-            vertical
+          <Menu
+            fixed={fixed ? 'top' : null}
+            inverted={!fixed}
+            pointing={!fixed}
+            secondary={!fixed}
+            size='large'
           >
-            <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size='large'
-            >
-              <Container>
-                <Link to='/'>
-                  <Menu.Item as='div' active={true}>
-                    Homepage
-                  </Menu.Item>
-                </Link>
-                <Link to='/search'>
-                  <Menu.Item as='div' >
-                    Search
-                  </Menu.Item>
-                </Link>
-                <Link to='/bookmark'>
-                  <Menu.Item as='div' >
-                    Bookmarks
-                  </Menu.Item>
-                </Link>
-                <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed}>
-                    Log in
-                  </Button>
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
+            <Container>
+              <Link to='/search'>
+                <Menu.Item as='div' active={currentPage === '/search'} >
+                  Search
                 </Menu.Item>
-              </Container>
-            </Menu>
-            <HeaderBar />
-          </Segment>
+              </Link>
+              <Link to='/bookmark'>
+                <Menu.Item as='div' active={currentPage === '/bookmark'} >
+                  Bookmarks
+                </Menu.Item>
+              </Link>
+              <Menu.Item position='right'>
+                <Button as='a' inverted={!fixed}>
+                  Log in
+                </Button>
+                <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                  Sign Up
+                </Button>
+              </Menu.Item>
+            </Container>
+          </Menu>
         </Visibility>
         {children}
       </Responsive>
@@ -75,4 +67,8 @@ class Heading extends Component {
   }
 }
 
-export default Heading;
+const mapStateToProps = state => {
+  return { currentPage: state.currentPage }
+}
+
+export default connect(mapStateToProps, null)(Heading);

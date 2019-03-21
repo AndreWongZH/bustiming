@@ -36,7 +36,7 @@ const HeaderBar = () => (
       }}
     />
     <Link
-      to='/'
+      to='/search'
     >
       <Button primary size='huge'>
         Get Started

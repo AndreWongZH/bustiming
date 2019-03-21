@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-	Button,
-	Icon
+	List
 } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { setCurrentPage } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -32,6 +32,10 @@ const StyledBody = styled.div`
 	border-width: 3px;
 `;
 
+const StyledListContent = styled(List.Content)`
+	font-size: 28px;
+`;
+
 class Bookmark extends Component {
 	constructor() {
 		super();
@@ -41,23 +45,29 @@ class Bookmark extends Component {
 		this.handlesubmit = this.handlesubmit.bind(this);
 	}
 
+	componentDidMount() {
+		this.props.setCurrentPage(this.props.history.location.pathname)
+	}
+
 	handlesubmit(e) {
 		console.log(this.props);
 	}
 
 	render() {
 		const savedBusstopComponent = this.props.savedBusstop.map(busstop => (
-			<div>
-				<h1>{busstop.number}</h1>
-			</div>
+			<List.Item>
+				<List.Icon name="bus" size="big"/>
+				<StyledListContent>{busstop.number}</StyledListContent>
+			</List.Item>
 		))
 		return (
 			<CenteredDiv>
 				<StyledDiv>
 					<h1 onClick={this.handlesubmit}>Bookmarks</h1>
 					<StyledBody>
-						All Saved bus here.
-						{savedBusstopComponent}
+						<List divided>
+							{savedBusstopComponent}
+						</List>
 					</StyledBody>
 				</StyledDiv>
 			</CenteredDiv>
@@ -69,4 +79,8 @@ const matchStateToProps = state => {
 	return { savedBusstop: state.savedBusstop }
 };
 
-export default connect(matchStateToProps, null)(Bookmark);
+const matchDispatchToProps = dispatch => ({
+	setCurrentPage: (payload) => dispatch(setCurrentPage(payload))
+})
+
+export default connect(matchStateToProps, matchDispatchToProps)(Bookmark);

@@ -5,13 +5,12 @@ import Homepage from './containers/Homepage';
 import Search from './containers/Search';
 import Bookmark from './containers/Bookmark';
 import Heading from './containers/Heading';
+import BusstopInfo from './containers/BusstopInfo';
 
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Switch,
-  Redirect
+  Switch
 } from 'react-router-dom'
 
 import styled from 'styled-components';
@@ -23,6 +22,7 @@ const StyledHeading = styled.div`
 `;
 
 class App extends Component {
+  
   render() {
     return (
       <Router>
@@ -31,9 +31,10 @@ class App extends Component {
             <Heading />
           </StyledHeading>
           <Switch>
-            <Route path='/' exact={true} component={Homepage} />
             <Route path='/search' exact={true} component={Search} />
+            <Route path='/busstopinfo' exact={true} component={BusstopInfo} />
             <Route path='/bookmark' exact={true} component={Bookmark} />
+            <Route path='' exact={true} component={Homepage} />
           </Switch>
         </div>
       </Router>
