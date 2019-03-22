@@ -1,11 +1,12 @@
 // the state in redux comes from reducers WHICH IS HERE
 // access the state in a stateful component using this.prop
 // CANNOT PUT ASYNCRONOUS LOGIC HERE
+
+import { SAVE_BUSSTOP, REMOVE_BUSSTOP, SAVE_CURRENT_BUSSTOP, CURRENT_PAGE, INVALID_BUSSTOP} from '../constants';
+
 const initialState = {
-	currentPage: 'qwert',
-	savedBusstop: [{
-		number: 12345
-	}],
+	currentPage: '',
+	savedBusstop: [],
 	busInfoPage: {
 		number: '',
 		data: []
@@ -13,12 +14,23 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-	if (action.type === 'SAVE_BUSSTOP') {
+	if (action.type === SAVE_BUSSTOP) {
 		return Object.assign({}, state, {
-			savedBusstop: state.savedBusstop.concat(action.payload)
+			savedBusstop: [
+				...state.savedBusstop,
+				action.payload
+			]
 		});
-	} else if (action.type === 'SAVE_CURRENT_BUSSTOP') {
-		console.log(action)
+	} else if (action.type === REMOVE_BUSSTOP) {
+		return Object.assign({}, state, {
+			savedBusstop: state.savedBusstop.filter(item => {
+				if (item === action.payload) {
+					return false;
+				}
+				return true;
+			})
+		});
+	} else if (action.type === SAVE_CURRENT_BUSSTOP) {
 		return {
 			...state,
 			busInfoPage: {
@@ -26,11 +38,11 @@ const rootReducer = (state = initialState, action) => {
 				data: action.payload.Services
 			}
 		}
-	} else if (action.type === 'CURRENT_PAGE') {
+	} else if (action.type === CURRENT_PAGE) {
 		return Object.assign({}, state, {
 			currentPage: action.payload
 		});
-	} else if (action.type === 'INVALID_BUSSTOP') {
+	} else if (action.type === INVALID_BUSSTOP) {
 		console.log(state);
 	}
 	return state;
