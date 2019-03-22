@@ -50,7 +50,7 @@ class Search extends Component {
 		const { busstopNumber } = this.state;
 		const { getBusstopData } = this.props;
 		await getBusstopData(busstopNumber);
-		this.setState({ redirect: true });
+		await this.setState({ redirect: true });
 		// might want to handle error here
 		await this.setState({ busstopNumber: '' });
 	}
@@ -69,7 +69,8 @@ class Search extends Component {
 					<Redirect
 						push
 						to={{
-							pathname: '/busstopinfo'
+							pathname: '/busstopinfo',
+							state: { referrer: busstopNumber }
 						}}
 					/>
 				)}

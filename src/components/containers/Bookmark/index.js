@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
 	List
 } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { setCurrentPage } from '../../../store/actions';
+import { setCurrentPage, getBusstopData } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -40,30 +41,45 @@ class Bookmark extends Component {
 	constructor() {
 		super();
 		this.state = {
-			busNumber: 0
+			redirectTo: '',
+			redirect: false
 		}
-		this.handlesubmit = this.handlesubmit.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	componentDidMount() {
 		this.props.setCurrentPage(this.props.history.location.pathname)
 	}
 
-	handlesubmit(e) {
-		console.log(this.props);
+	handleClick = async (e) => {
+		const { getBusstopData } = this.props;
+		e.preventDefault();
+		const busstopNumber = e.currentTarget.textContent
+		await getBusstopData(busstopNumber)
+		this.setState({ redirectTo: busstopNumber, redirect: true });
 	}
 
 	render() {
-		const savedBusstopComponent = this.props.savedBusstop.map(busstop => (
-			<List.Item>
+		const { redirectTo, redirect } = this.state;
+		const savedBusstopComponent = this.props.savedBusstop.map(busstopNumber => (
+			<List.Item key={busstopNumber} >
 				<List.Icon name="bus" size="big"/>
-				<StyledListContent>{busstop.number}</StyledListContent>
+				<StyledListContent onClick={this.handleClick} >{busstopNumber}</StyledListContent>
 			</List.Item>
 		))
 		return (
 			<CenteredDiv>
+				{ redirect && (
+					<Redirect
+						push
+						to={{
+							pathname: '/busstopinfo',
+							state: { referrer: redirectTo }
+						}}
+					/>
+				)}
 				<StyledDiv>
-					<h1 onClick={this.handlesubmit}>Bookmarks</h1>
+					<h1>Bookmarks</h1>
 					<StyledBody>
 						<List divided>
 							{savedBusstopComponent}
@@ -76,11 +92,12 @@ class Bookmark extends Component {
 }
 
 const matchStateToProps = state => {
-	return { savedBusstop: state.savedBusstop }
+	return { savedBusstop: state.savedBusstop, busInfoPage: state.busInfoPage }
 };
 
 const matchDispatchToProps = dispatch => ({
-	setCurrentPage: (payload) => dispatch(setCurrentPage(payload))
+	setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
+	getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber))
 })
 
 export default connect(matchStateToProps, matchDispatchToProps)(Bookmark);

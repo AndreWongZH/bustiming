@@ -22,7 +22,7 @@ class Heading extends Component {
   showFixedMenu = () => this.setState({ fixed: true })
 
   render() {
-    const { children, currentPage } = this.props
+    const { children, currentPage, busInfoPage } = this.props
     const { fixed } = this.state
     
     return (
@@ -50,6 +50,13 @@ class Heading extends Component {
                   Bookmarks
                 </Menu.Item>
               </Link>
+              { busInfoPage.number !== '' && (
+                <Link to='/busstopinfo'>
+                  <Menu.Item as='div' active={currentPage === '/busstopinfo'} >
+                    Bus-Stop Info
+                  </Menu.Item>
+                </Link>
+              )}
               <Menu.Item position='right'>
                 <Button as='a' inverted={!fixed}>
                   Log in
@@ -68,7 +75,7 @@ class Heading extends Component {
 }
 
 const mapStateToProps = state => {
-  return { currentPage: state.currentPage }
+  return { currentPage: state.currentPage, busInfoPage: state.busInfoPage }
 }
 
 export default connect(mapStateToProps, null)(Heading);

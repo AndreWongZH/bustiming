@@ -7,7 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Busservice from './Busservice';
-import { saveBusstop } from '../../../store/actions';
+import { saveBusstop, removeBusstop, setCurrentPage } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -53,16 +53,25 @@ class BusstopInfo extends Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
+	componentDidMount() {
+		this.props.setCurrentPage(this.props.history.location.pathname)
+
+		// this is to check if busstopcode is already bookmarked
+		// this.props.location.state is redirected from /search
+		if (this.props.location.state !== undefined){
+			this.setState({ savedBookmark: this.props.savedBusstop.includes(this.props.location.state.referrer) })	
+		}
+	}
 
 	handleClick(e) {
 		const { savedBookmark } = this.state;
-		const { number } = this.props.saveCurrentBusstop;
+		const { number } = this.props.busInfoPage;
 
 		if (savedBookmark) {
-			this.props.removeBusstop({ number })
+			this.props.removeBusstop(number)
 			this.setState({ savedBookmark: false })
 		} else {
-			this.props.saveBusstop({ number });
+			this.props.saveBusstop(number);
 			this.setState({ savedBookmark: true });
 		}
 	}
@@ -70,16 +79,17 @@ class BusstopInfo extends Component {
 	render() {
 		const { savedBookmark } = this.state;
 		const { number, data } = this.props.busInfoPage;
+		
 		return (
 			<CenteredDiv>
 				<StyledDiv>
 					<h1>Bus Stop #{number}</h1>
-					<StyledIcon name={savedBookmark ? 'star' : 'star outline'} color='yellow' size='big' onClick={this.handleClick} />
+					<StyledIcon name={ savedBookmark ? 'star' : 'star outline'} color='yellow' size='big' onClick={this.handleClick} />
 				</StyledDiv>
 				<StyledBody>
 					<Busservice data={data} />
 				</StyledBody>
-				<Link to='/'>
+				<Link to='/search'>
 					<StyledButton>
 						<Button>Search Another</Button>
 					</StyledButton>
@@ -90,11 +100,13 @@ class BusstopInfo extends Component {
 }
 
 const matchStateToProps = state => {
-	return { busInfoPage: state.busInfoPage }
+	return { busInfoPage: state.busInfoPage, savedBusstop: state.savedBusstop }
 }
 
 const matchDispatchToProps = dispatch => ({
-	saveBusstop: (payload) => dispatch(saveBusstop(payload))
+	saveBusstop: (payload) => dispatch(saveBusstop(payload)),
+	removeBusstop: (payload) => dispatch(removeBusstop(payload)),
+	setCurrentPage: (payload) => dispatch(setCurrentPage(payload))
 });
 
 export default connect(matchStateToProps, matchDispatchToProps)(BusstopInfo);

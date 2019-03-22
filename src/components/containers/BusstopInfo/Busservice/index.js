@@ -8,7 +8,6 @@ const StyledBusserviceCard = styled.div`
 `;
 
 const Busservice = ({ data }) => {
-	console.log(data);
 	const BusserviceCardComp = data.map(service => (
 		<BusserviceCard key={service.ServiceNo} service={service} />
 	))
