@@ -12,6 +12,7 @@
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -23,6 +24,13 @@
         "react"
     ],
     "rules": {
+        // possible errors
+        "no-extra-boolean-cast": "error",
+        "require-atomic-updates": "error",
+        // best practices (to be added)
+        // var
+        "no-undefined": "error",
+        // styling
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
             "objects": "always-multiline",
@@ -45,6 +53,25 @@
         }],
         "operator-linebreak": ["error", "after"],
         "padded-blocks": ["error", "never"],
-        
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "semi-spacing": ["error", {"before": false, "after": true}],
+        "semi-style": ["error", "last"],
+        "space-before-blocks": ["error", "always"],
+        "space-before-function-paren": ["error", "always"],
+        "switch-colon-spacing": ["error", {"after": true, "before": false}],
+        // ECMAScript6
+        "arrow-spacing": ["error", { "before": true, "after": true }],
+        "no-duplicate-imports": "error",
+        "no-useless-constructor": "error",
+        "no-var": "error",
+        "prefer-const": "error",
+        "prefer-destructuring": ["error", {
+            "object": true,
+            "array": true}
+        ],
+        "prefer-template": "error",
+        "rest-spread-spacing": ["error"],
+        "template-curly-spacing": ["error", "never"]
     }
 }
