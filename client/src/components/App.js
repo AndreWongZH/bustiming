@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import Homepage from './containers/Homepage';
-import Search from './containers/Search';
-import Bookmark from './containers/Bookmark';
-import Heading from './containers/Heading';
-import BusstopInfo from './containers/BusstopInfo';
-
+import styled from 'styled-components';
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
-
-import styled from 'styled-components';
+import Homepage from './containers/Homepage';
+import Search from './containers/Search';
+import Bookmark from './containers/Bookmark';
+import Heading from './containers/Heading';
+import BusstopInfo from './containers/BusstopInfo';
 
 const StyledHeading = styled.div`
   background-color: #123456;
