@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
 	Button,
-	Icon
+	Icon,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Busservice from './Busservice';
-import { saveBusstop, removeBusstop, setCurrentPage } from '../../../store/actions';
+import {
+	saveBusstop,
+	removeBusstop,
+	setCurrentPage,
+} from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -45,41 +49,53 @@ const StyledButton = styled.div`
 `;
 
 class BusstopInfo extends Component {
-	constructor() {
+	constructor () {
 		super();
-		this.state = {
-			savedBookmark: false
-		}
+		this.state = { savedBookmark: false };
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	componentDidMount() {
-		this.props.setCurrentPage(this.props.history.location.pathname)
+	componentDidMount () {
+		const {
+			setCurrentPage,
+			history,
+			location,
+			savedBusstop,
+		} = this.props;
+		setCurrentPage(history.location.pathname);
 
 		// this is to check if busstopcode is already bookmarked
 		// this.props.location.state is redirected from /search
-		if (this.props.location.state !== undefined){
-			this.setState({ savedBookmark: this.props.savedBusstop.includes(this.props.location.state.referrer) })	
+		if (location.state !== undefined) {
+			this.setState({ savedBookmark: savedBusstop.includes(location.state.referrer) });
 		}
 	}
 
-	handleClick(e) {
+	handleClick () {
 		const { savedBookmark } = this.state;
-		const { number } = this.props.busInfoPage;
+		const {
+			busInfoPage,
+			removeBusstop,
+			saveBusstop,
+		} = this.props;
 
 		if (savedBookmark) {
-			this.props.removeBusstop(number)
-			this.setState({ savedBookmark: false })
+			removeBusstop(busInfoPage.number);
+			this.setState({ savedBookmark: false });
 		} else {
-			this.props.saveBusstop(number);
+			saveBusstop(busInfoPage.number);
 			this.setState({ savedBookmark: true });
 		}
 	}
 
-	render() {
+	render () {
 		const { savedBookmark } = this.state;
-		const { number, data } = this.props.busInfoPage;
-		
+		const { busInfoPage } = this.props;
+		const {
+			number,
+			data,
+		} = busInfoPage;
+
 		return (
 			<CenteredDiv>
 				<StyledDiv>
@@ -95,18 +111,21 @@ class BusstopInfo extends Component {
 					</StyledButton>
 				</Link>
 			</CenteredDiv>
-		)
+		);
 	}
 }
 
 const matchStateToProps = state => {
-	return { busInfoPage: state.busInfoPage, savedBusstop: state.savedBusstop }
-}
+	return {
+		busInfoPage: state.busInfoPage,
+		savedBusstop: state.savedBusstop,
+	};
+};
 
 const matchDispatchToProps = dispatch => ({
 	saveBusstop: (payload) => dispatch(saveBusstop(payload)),
 	removeBusstop: (payload) => dispatch(removeBusstop(payload)),
-	setCurrentPage: (payload) => dispatch(setCurrentPage(payload))
+	setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
 });
 
 export default connect(matchStateToProps, matchDispatchToProps)(BusstopInfo);

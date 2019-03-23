@@ -7,10 +7,9 @@ import {
 import HeaderBar from '../../Shared/HeaderBar';
 
 class Homepage extends Component {
+  render () {
+    const { children } = this.props;
 
-  render() {
-    const { children } = this.props
-    
     return (
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
@@ -29,7 +28,7 @@ class Homepage extends Component {
         </Visibility>
         {children}
       </Responsive>
-    )
+    );
   }
 }
 

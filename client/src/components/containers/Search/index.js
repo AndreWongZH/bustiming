@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import {
 	Input,
 	Button,
-	Form
+	Form,
 } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { setCurrentPage, getBusstopData } from '../../../store/actions';
+import {
+	setCurrentPage,
+	getBusstopData,
+} from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -27,22 +30,26 @@ const StyledDiv = styled(Form)`
 `;
 
 class Search extends Component {
-	constructor() {
+	constructor () {
 		super();
 		this.state = {
 			busstopNumber: '',
-			redirect: false
-		}
+			redirect: false,
+		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	componentDidMount() {
-		this.props.setCurrentPage(this.props.history.location.pathname)
+	componentDidMount () {
+		const {
+			setCurrentPage,
+			history,
+		} = this.props;
+		setCurrentPage(history.location.pathname);
 	}
 
 	handleChange = (e) => {
-		this.setState({ busstopNumber: e.target.value })
+		this.setState({ busstopNumber: e.target.value });
 	}
 
 	handleSubmit = async (e) => {
@@ -55,14 +62,17 @@ class Search extends Component {
 		await this.setState({ busstopNumber: '' });
 	}
 
-	render() {
+	render () {
 		// const element = this.props.articles.map(el => (
 		// 	<div>
 		// 		<h1>{el.busstopNumber}</h1>
 		// 	</div>
 		// ))
-		
-		const { busstopNumber, redirect } = this.state;
+
+		const {
+			busstopNumber,
+			redirect,
+		} = this.state;
 		return (
 			<CenteredDiv>
 				{ redirect && (
@@ -86,13 +96,13 @@ class Search extends Component {
 					<Button content='Submit' />
 				</StyledDiv>
 			</CenteredDiv>
-		)
+		);
 	}
 }
 
 const matchDispatchToProps = dispatch => ({
 	setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
-	getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber))
-})
+	getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber)),
+});
 
 export default connect(null, matchDispatchToProps)(Search);

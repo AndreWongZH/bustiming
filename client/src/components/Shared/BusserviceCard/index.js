@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Header, Segment } from 'semantic-ui-react';
+import {
+	Card,
+	Header,
+	Segment,
+} from 'semantic-ui-react';
 
 const StyledCard = styled.div`
 	margin: 30px 0;
@@ -37,7 +41,7 @@ const BusserviceCard = ({ service }) => {
 				</Card.Group>
 			</Segment>
 		</StyledCard>
-	)
-}
+	);
+};
 
 export default BusserviceCard;

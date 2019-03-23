@@ -10,12 +10,12 @@ const StyledBusserviceCard = styled.div`
 const Busservice = ({ data }) => {
 	const BusserviceCardComp = data.map(service => (
 		<BusserviceCard key={service.ServiceNo} service={service} />
-	))
+	));
 	return (
 		<StyledBusserviceCard>
 			{BusserviceCardComp}
 		</StyledBusserviceCard>
-	)
-}
+	);
+};
 
 export default Busservice;

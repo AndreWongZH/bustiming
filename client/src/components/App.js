@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
-} from 'react-router-dom'
+  Switch,
+} from 'react-router-dom';
 import Homepage from './containers/Homepage';
 import Search from './containers/Search';
 import Bookmark from './containers/Bookmark';
@@ -18,8 +18,7 @@ const StyledHeading = styled.div`
 `;
 
 class App extends Component {
-  
-  render() {
+  render () {
     return (
       <Router>
         <div className="App">

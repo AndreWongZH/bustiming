@@ -3,7 +3,7 @@ import {
   Container,
   Header,
   Icon,
-  Button
+  Button,
 } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -44,6 +44,6 @@ const HeaderBar = () => (
       </Button>
     </Link>
   </StyledContainer>
-)
+);
 
 export default HeaderBar;

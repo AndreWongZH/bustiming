@@ -4,27 +4,29 @@ import {
   Visibility,
   Menu,
   Container,
-  Button
+  Button,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Heading extends Component {
-  constructor() {
-    super()
-    this.state = {
-
-    }
+  constructor () {
+    super();
+    this.state = {};
   }
   state = {}
 
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
 
-  render() {
-    const { children, currentPage, busInfoPage } = this.props
-    const { fixed } = this.state
-    
+  render () {
+    const {
+      children,
+      currentPage,
+      busInfoPage,
+    } = this.props;
+    const { fixed } = this.state;
+
     return (
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
@@ -70,12 +72,15 @@ class Heading extends Component {
         </Visibility>
         {children}
       </Responsive>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return { currentPage: state.currentPage, busInfoPage: state.busInfoPage }
-}
+  return {
+    currentPage: state.currentPage,
+    busInfoPage: state.busInfoPage,
+  };
+};
 
 export default connect(mapStateToProps, null)(Heading);

@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import {
+	createStore,
+	applyMiddleware,
+} from 'redux';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './store/reducers';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
-import { checkValidBusstop } from './store/middleware'
+import { checkValidBusstop } from './store/middleware';
 
 const store = createStore(
 	rootReducer,

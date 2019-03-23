@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import {
-	List
-} from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { setCurrentPage, getBusstopData } from '../../../store/actions';
+import {
+	setCurrentPage,
+	getBusstopData,
+} from '../../../store/actions';
 
 const CenteredDiv = styled.div`
 	padding: 1.5rem 0 2rem;
@@ -38,17 +39,21 @@ const StyledListContent = styled(List.Content)`
 `;
 
 class Bookmark extends Component {
-	constructor() {
+	constructor () {
 		super();
 		this.state = {
 			redirectTo: '',
-			redirect: false
-		}
+			redirect: false,
+		};
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	componentDidMount() {
-		this.props.setCurrentPage(this.props.history.location.pathname)
+	componentDidMount () {
+		const {
+			setCurrentPage,
+			history,
+		} = this.props;
+		setCurrentPage(history.location.pathname);
 	}
 
 	handleClick = async (e) => {
@@ -59,14 +64,17 @@ class Bookmark extends Component {
 		this.setState({ redirectTo: busstopNumber, redirect: true });
 	}
 
-	render() {
-		const { redirectTo, redirect } = this.state;
+	render () {
+		const {
+			redirectTo,
+			redirect,
+		} = this.state;
 		const savedBusstopComponent = this.props.savedBusstop.map(busstopNumber => (
 			<List.Item key={busstopNumber} >
 				<List.Icon name="bus" size="big"/>
 				<StyledListContent onClick={this.handleClick} >{busstopNumber}</StyledListContent>
 			</List.Item>
-		))
+		));
 		return (
 			<CenteredDiv>
 				{ redirect && (
@@ -87,17 +95,20 @@ class Bookmark extends Component {
 					</StyledBody>
 				</StyledDiv>
 			</CenteredDiv>
-		)
+		);
 	}
 }
 
 const matchStateToProps = state => {
-	return { savedBusstop: state.savedBusstop, busInfoPage: state.busInfoPage }
+	return {
+		savedBusstop: state.savedBusstop,
+		busInfoPage: state.busInfoPage,
+	};
 };
 
 const matchDispatchToProps = dispatch => ({
 	setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
-	getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber))
-})
+	getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber)),
+});
 
 export default connect(matchStateToProps, matchDispatchToProps)(Bookmark);
