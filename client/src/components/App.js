@@ -26,10 +26,10 @@ class App extends Component {
             <Heading />
           </StyledHeading>
           <Switch>
-            <Route path='/search' exact={true} component={Search} />
-            <Route path='/busstopinfo' exact={true} component={BusstopInfo} />
-            <Route path='/bookmark' exact={true} component={Bookmark} />
-            <Route path='' exact={true} component={Homepage} />
+            <Route path='/search' exact component={Search} />
+            <Route path='/busstopinfo' exact component={BusstopInfo} />
+            <Route path='/bookmark' exact component={Bookmark} />
+            <Route path='' exact component={Homepage} />
           </Switch>
         </div>
       </Router>

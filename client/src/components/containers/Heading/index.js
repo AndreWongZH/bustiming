@@ -43,29 +43,19 @@ class Heading extends Component {
           >
             <Container>
               <Link to='/search'>
-                <Menu.Item as='div' active={currentPage === '/search'} >
-                  Search
-                </Menu.Item>
+                <Menu.Item as='div' active={currentPage === '/search'}>Search</Menu.Item>
               </Link>
               <Link to='/bookmark'>
-                <Menu.Item as='div' active={currentPage === '/bookmark'} >
-                  Bookmarks
-                </Menu.Item>
+                <Menu.Item as='div' active={currentPage === '/bookmark'}>Bookmarks</Menu.Item>
               </Link>
               { busInfoPage.number !== '' && (
                 <Link to='/busstopinfo'>
-                  <Menu.Item as='div' active={currentPage === '/busstopinfo'} >
-                    Bus-Stop Info
-                  </Menu.Item>
+                  <Menu.Item as='div' active={currentPage === '/busstopinfo'}>Bus-Stop Info</Menu.Item>
                 </Link>
               )}
               <Menu.Item position='right'>
-                <Button as='a' inverted={!fixed}>
-                  Log in
-                </Button>
-                <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                  Sign Up
-                </Button>
+                <Button as='a' inverted={!fixed}>Log in</Button>
+                <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Up</Button>
               </Menu.Item>
             </Container>
           </Menu>
