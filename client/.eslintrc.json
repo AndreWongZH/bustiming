@@ -6,7 +6,10 @@
     },
     "extends": [
         "airbnb",
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -21,16 +24,15 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
-        // possible errors
         "no-extra-boolean-cast": "error",
         "require-atomic-updates": "error",
-        // best practices (to be added)
-        // var
-        "no-undefined": "error",
-        // styling
+
+        "no-undefined": "off",
+
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
             "objects": "always-multiline",
@@ -60,7 +62,7 @@
         "space-before-blocks": ["error", "always"],
         "space-before-function-paren": ["error", "always"],
         "switch-colon-spacing": ["error", {"after": true, "before": false}],
-        // ECMAScript6
+
         "arrow-spacing": ["error", { "before": true, "after": true }],
         "no-duplicate-imports": "error",
         "no-useless-constructor": "error",
@@ -72,6 +74,10 @@
         ],
         "prefer-template": "error",
         "rest-spread-spacing": ["error"],
-        "template-curly-spacing": ["error", "never"]
+        "template-curly-spacing": ["error", "never"],
+
+        "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+        "react/jsx-indent": ["error", 2, { "checkAttributes": true}],
+        "react/jsx-one-expression-per-line": ["off", { "allow": "single-child" }]
     }
 }
