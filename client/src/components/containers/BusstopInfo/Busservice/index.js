@@ -8,15 +8,15 @@ const StyledBusserviceCard = styled.div`
   margin: 30px;
 `;
 
-Busservice.propTypes = {
-  data: PropTypes.array.isRequired,
-};
-
 const Busservice = ({ data }) => {
   const BusserviceCardComp = data.map((service) => (
     <BusserviceCard key={service.ServiceNo} service={service} />
   ));
   return <StyledBusserviceCard>{BusserviceCardComp}</StyledBusserviceCard>;
+};
+
+Busservice.propTypes = {
+  data: PropTypes.array.isRequired,
 };
 
 export default Busservice;

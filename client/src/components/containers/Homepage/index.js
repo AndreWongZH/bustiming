@@ -3,13 +3,6 @@ import { Responsive, Visibility, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import HeaderBar from '../../Shared/HeaderBar';
 
-Homepage.propTypes = {
-  children: PropTypes.node,
-};
-
-Homepage.defaultProps = {
-  children: null,
-};
 class Homepage extends Component {
   render() {
     const { children } = this.props;
@@ -38,5 +31,13 @@ class Homepage extends Component {
     );
   }
 }
+
+Homepage.propTypes = {
+  children: PropTypes.node,
+};
+
+Homepage.defaultProps = {
+  children: null,
+};
 
 export default Homepage;

@@ -10,19 +10,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-Heading.propTypes = {
-  children: PropTypes.node,
-  currentPage: PropTypes.string.isRequired,
-  busInfoPage: PropTypes.shape({
-    number: PropTypes.string,
-    data: PropTypes.array,
-  }).isRequired,
-};
-
-Heading.defaultProps = {
-  children: null,
-};
-
 class Heading extends Component {
   constructor() {
     super();
@@ -90,6 +77,19 @@ class Heading extends Component {
     );
   }
 }
+
+Heading.propTypes = {
+  children: PropTypes.node,
+  currentPage: PropTypes.string.isRequired,
+  busInfoPage: PropTypes.shape({
+    number: PropTypes.string,
+    data: PropTypes.array,
+  }).isRequired,
+};
+
+Heading.defaultProps = {
+  children: null,
+};
 
 const mapStateToProps = (state) => {
   return {

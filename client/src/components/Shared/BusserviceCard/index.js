@@ -7,10 +7,6 @@ const StyledCard = styled.div`
   margin: 30px 0;
 `;
 
-BusserviceCard.propTypes = {
-  service: PropTypes.object.isRequired,
-};
-
 const BusserviceCard = ({ service }) => {
   const BusCards = Object.keys(service).map((key) => {
     if (key === 'NextBus' || key === 'NextBus2' || key === 'NextBus3') {
@@ -43,6 +39,10 @@ const BusserviceCard = ({ service }) => {
       </Segment>
     </StyledCard>
   );
+};
+
+BusserviceCard.propTypes = {
+  service: PropTypes.object.isRequired,
 };
 
 export default BusserviceCard;

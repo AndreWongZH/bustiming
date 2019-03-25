@@ -23,12 +23,6 @@ const StyledDiv = styled(Form)`
   margin: 10px auto;
 `;
 
-Search.propTypes = {
-  setCurrentPage: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  getBusstopData: PropTypes.func.isRequired,
-};
-
 class Search extends Component {
   constructor() {
     super();
@@ -93,6 +87,12 @@ class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+  setCurrentPage: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  getBusstopData: PropTypes.func.isRequired,
+};
 
 const matchDispatchToProps = (dispatch) => ({
   setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),

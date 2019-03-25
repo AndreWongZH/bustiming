@@ -36,13 +36,6 @@ const StyledListContent = styled(List.Content)`
   font-size: 28px;
 `;
 
-Bookmark.propTypes = {
-  setCurrentPage: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  getBusstopData: PropTypes.func.isRequired,
-  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
 class Bookmark extends Component {
   constructor() {
     super();
@@ -101,6 +94,13 @@ class Bookmark extends Component {
     );
   }
 }
+
+Bookmark.propTypes = {
+  setCurrentPage: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  getBusstopData: PropTypes.func.isRequired,
+  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 const matchStateToProps = (state) => {
   return {

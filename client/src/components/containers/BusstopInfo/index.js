@@ -46,19 +46,6 @@ const StyledButton = styled.div`
   margin: 10px;
 `;
 
-BusstopInfo.propTypes = {
-  setCurrentPage: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
-  saveBusstop: PropTypes.func.isRequired,
-  removeBusstop: PropTypes.func.isRequired,
-  busInfoPage: PropTypes.shape({
-    number: PropTypes.string,
-    data: PropTypes.array,
-  }).isRequired,
-};
-
 class BusstopInfo extends Component {
   constructor() {
     super();
@@ -120,6 +107,19 @@ class BusstopInfo extends Component {
     );
   }
 }
+
+BusstopInfo.propTypes = {
+  setCurrentPage: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
+  saveBusstop: PropTypes.func.isRequired,
+  removeBusstop: PropTypes.func.isRequired,
+  busInfoPage: PropTypes.shape({
+    number: PropTypes.string,
+    data: PropTypes.array,
+  }).isRequired,
+};
 
 const matchStateToProps = (state) => {
   return {
