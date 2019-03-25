@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Header,
-  Icon,
-  Button,
-} from 'semantic-ui-react';
+import { Container, Header, Icon, Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -15,8 +10,8 @@ const StyledContainer = styled(Container)`
 const HeaderBar = () => (
   <StyledContainer text>
     <Header
-      as='h1'
-      content='Not Another Bus App'
+      as="h1"
+      content="Not Another Bus App"
       inverted
       style={{
         fontSize: '2em',
@@ -26,8 +21,8 @@ const HeaderBar = () => (
       }}
     />
     <Header
-      as='h2'
-      content='Again with the apps.'
+      as="h2"
+      content="Again with the apps."
       inverted
       style={{
         fontSize: '1.7em',
@@ -35,12 +30,10 @@ const HeaderBar = () => (
         marginTop: '1.5em',
       }}
     />
-    <Link
-      to='/search'
-    >
-      <Button primary size='huge'>
+    <Link to="/search">
+      <Button primary size="huge">
         Get Started
-        <Icon name='right arrow' />
+        <Icon name="right arrow" />
       </Button>
     </Link>
   </StyledContainer>

@@ -47,20 +47,17 @@
             "skipBlankLines": false,
             "ignoreComments": true
         }],
-        "object-curly-newline": ["error", {
-            "ObjectExpression": { "minProperties": 2 },
-            "ObjectPattern": { "minProperties": 2 },
-            "ImportDeclaration": { "minProperties": 2 },
-            "ExportDeclaration": { "minProperties": 2 }
-        }],
-        "operator-linebreak": ["error", "after"],
         "padded-blocks": ["error", "never"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "semi-spacing": ["error", {"before": false, "after": true}],
         "semi-style": ["error", "last"],
         "space-before-blocks": ["error", "always"],
-        "space-before-function-paren": ["error", "always"],
+        "space-before-function-paren": ["error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
         "switch-colon-spacing": ["error", {"after": true, "before": false}],
 
         "arrow-spacing": ["error", { "before": true, "after": true }],
@@ -78,6 +75,9 @@
 
         "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
         "react/jsx-indent": ["error", 2, { "checkAttributes": true}],
-        "react/jsx-one-expression-per-line": ["off", { "allow": "single-child" }]
+        "react/jsx-one-expression-per-line": ["off", { "allow": "single-child" }],
+        "react/forbid-prop-types": ["off", { "forbid": ["any", "array"]}],
+
+        "import/prefer-default-export" : ["off"]
     }
 }

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Button,
-  Icon,
-} from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Busservice from './Busservice';
 import {
   saveBusstop,
@@ -16,11 +14,11 @@ import {
 const CenteredDiv = styled.div`
   padding: 1.5rem 0 2rem;
   padding-bottom: 500px;
-  margin: 4rem auto;	
+  margin: 4rem auto;
   width: 70%;
   border-style: solid;
   border-width: 3px;
-  background-color: #F0F8FF;
+  background-color: #f0f8ff;
 `;
 
 const StyledDiv = styled.div`
@@ -41,43 +39,49 @@ const StyledBody = styled.div`
 `;
 
 const StyledIcon = styled(Icon)`
-  float: right
+  float: right;
 `;
 
 const StyledButton = styled.div`
   margin: 10px;
 `;
 
+BusstopInfo.propTypes = {
+  setCurrentPage: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
+  saveBusstop: PropTypes.func.isRequired,
+  removeBusstop: PropTypes.func.isRequired,
+  busInfoPage: PropTypes.shape({
+    number: PropTypes.string,
+    data: PropTypes.array,
+  }).isRequired,
+};
+
 class BusstopInfo extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = { savedBookmark: false };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount () {
-    const {
-      setCurrentPage,
-      history,
-      location,
-      savedBusstop,
-    } = this.props;
+  componentDidMount() {
+    const { setCurrentPage, history, location, savedBusstop } = this.props;
     setCurrentPage(history.location.pathname);
 
     // this is to check if busstopcode is already bookmarked
     // this.props.location.state is redirected from /search
     if (location.state !== undefined) {
-      this.setState({ savedBookmark: savedBusstop.includes(location.state.referrer) });
+      this.setState({
+        savedBookmark: savedBusstop.includes(location.state.referrer),
+      });
     }
   }
 
-  handleClick () {
+  handleClick() {
     const { savedBookmark } = this.state;
-    const {
-      busInfoPage,
-      removeBusstop,
-      saveBusstop,
-    } = this.props;
+    const { busInfoPage, removeBusstop, saveBusstop } = this.props;
 
     if (savedBookmark) {
       removeBusstop(busInfoPage.number);
@@ -88,24 +92,26 @@ class BusstopInfo extends Component {
     }
   }
 
-  render () {
+  render() {
     const { savedBookmark } = this.state;
     const { busInfoPage } = this.props;
-    const {
-      number,
-      data,
-    } = busInfoPage;
+    const { number, data } = busInfoPage;
 
     return (
       <CenteredDiv>
         <StyledDiv>
           <h1>Bus Stop #{number}</h1>
-          <StyledIcon name={savedBookmark ? 'star' : 'star outline'} color='yellow' size='big' onClick={this.handleClick} />
+          <StyledIcon
+            name={savedBookmark ? 'star' : 'star outline'}
+            color="yellow"
+            size="big"
+            onClick={this.handleClick}
+          />
         </StyledDiv>
         <StyledBody>
           <Busservice data={data} />
         </StyledBody>
-        <Link to='/search'>
+        <Link to="/search">
           <StyledButton>
             <Button>Search Another</Button>
           </StyledButton>
@@ -115,17 +121,20 @@ class BusstopInfo extends Component {
   }
 }
 
-const matchStateToProps = state => {
+const matchStateToProps = (state) => {
   return {
     busInfoPage: state.busInfoPage,
     savedBusstop: state.savedBusstop,
   };
 };
 
-const matchDispatchToProps = dispatch => ({
+const matchDispatchToProps = (dispatch) => ({
   saveBusstop: (payload) => dispatch(saveBusstop(payload)),
   removeBusstop: (payload) => dispatch(removeBusstop(payload)),
   setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
 });
 
-export default connect(matchStateToProps, matchDispatchToProps)(BusstopInfo);
+export default connect(
+  matchStateToProps,
+  matchDispatchToProps
+)(BusstopInfo);

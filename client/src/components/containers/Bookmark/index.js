@@ -3,19 +3,17 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { List } from 'semantic-ui-react';
 import styled from 'styled-components';
-import {
-  setCurrentPage,
-  getBusstopData,
-} from '../../../store/actions';
+import PropTypes from 'prop-types';
+import { setCurrentPage, getBusstopData } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
   padding: 1.5rem 0 2rem;
   padding-bottom: 500px;
-  margin: 4rem auto;	
+  margin: 4rem auto;
   width: 70%;
   border-style: solid;
   border-width: 3px;
-  background-color: #F0F8FF;
+  background-color: #f0f8ff;
 `;
 
 const StyledDiv = styled.div`
@@ -38,8 +36,15 @@ const StyledListContent = styled(List.Content)`
   font-size: 28px;
 `;
 
+Bookmark.propTypes = {
+  setCurrentPage: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  getBusstopData: PropTypes.func.isRequired,
+  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
 class Bookmark extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {
       redirectTo: '',
@@ -48,11 +53,8 @@ class Bookmark extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount () {
-    const {
-      setCurrentPage,
-      history,
-    } = this.props;
+  componentDidMount() {
+    const { setCurrentPage, history } = this.props;
     setCurrentPage(history.location.pathname);
   }
 
@@ -65,23 +67,22 @@ class Bookmark extends Component {
       redirectTo: busstopNumber,
       redirect: true,
     });
-  }
+  };
 
-  render () {
-    const {
-      redirectTo,
-      redirect,
-    } = this.state;
+  render() {
+    const { redirectTo, redirect } = this.state;
     const { savedBusstop } = this.props;
-    const savedBusstopComponent = savedBusstop.map(busstopNumber => (
+    const savedBusstopComponent = savedBusstop.map((busstopNumber) => (
       <List.Item key={busstopNumber}>
         <List.Icon name="bus" size="big" />
-        <StyledListContent onClick={this.handleClick}>{busstopNumber}</StyledListContent>
+        <StyledListContent onClick={this.handleClick}>
+          {busstopNumber}
+        </StyledListContent>
       </List.Item>
     ));
     return (
       <CenteredDiv>
-        { redirect && (
+        {redirect && (
           <Redirect
             push
             to={{
@@ -93,9 +94,7 @@ class Bookmark extends Component {
         <StyledDiv>
           <h1>Bookmarks</h1>
           <StyledBody>
-            <List divided>
-              {savedBusstopComponent}
-            </List>
+            <List divided>{savedBusstopComponent}</List>
           </StyledBody>
         </StyledDiv>
       </CenteredDiv>
@@ -103,16 +102,19 @@ class Bookmark extends Component {
   }
 }
 
-const matchStateToProps = state => {
+const matchStateToProps = (state) => {
   return {
     savedBusstop: state.savedBusstop,
     busInfoPage: state.busInfoPage,
   };
 };
 
-const matchDispatchToProps = dispatch => ({
+const matchDispatchToProps = (dispatch) => ({
   setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
   getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber)),
 });
 
-export default connect(matchStateToProps, matchDispatchToProps)(Bookmark);
+export default connect(
+  matchStateToProps,
+  matchDispatchToProps
+)(Bookmark);

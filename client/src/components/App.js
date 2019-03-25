@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Homepage from './containers/Homepage';
 import Search from './containers/Search';
 import Bookmark from './containers/Bookmark';
@@ -18,7 +14,12 @@ const StyledHeading = styled.div`
 `;
 
 class App extends Component {
-  render () {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
+  render() {
     return (
       <Router>
         <div className="App">
@@ -26,10 +27,10 @@ class App extends Component {
             <Heading />
           </StyledHeading>
           <Switch>
-            <Route path='/search' exact component={Search} />
-            <Route path='/busstopinfo' exact component={BusstopInfo} />
-            <Route path='/bookmark' exact component={Bookmark} />
-            <Route path='' exact component={Homepage} />
+            <Route path="/search" exact component={Search} />
+            <Route path="/busstopinfo" exact component={BusstopInfo} />
+            <Route path="/bookmark" exact component={Bookmark} />
+            <Route path="" exact component={Homepage} />
           </Switch>
         </div>
       </Router>

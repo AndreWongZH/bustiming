@@ -1,108 +1,105 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import {
-	Input,
-	Button,
-	Form,
-} from 'semantic-ui-react';
+import { Input, Button, Form } from 'semantic-ui-react';
 import styled from 'styled-components';
-import {
-	setCurrentPage,
-	getBusstopData,
-} from '../../../store/actions';
+import PropTypes from 'prop-types';
+import { setCurrentPage, getBusstopData } from '../../../store/actions';
 
 const CenteredDiv = styled.div`
-	padding: 1.5rem 0 2rem;
-	margin: 4rem auto;	
-	width: 40%;
-	border-style: solid;
-	border-width: 3px;
-	background-color: #F0F8FF;
+  padding: 1.5rem 0 2rem;
+  margin: 4rem auto;
+  width: 40%;
+  border-style: solid;
+  border-width: 3px;
+  background-color: #f0f8ff;
 `;
 
 const StyledDiv = styled(Form)`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: 2rem;
-	margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  margin: 10px auto;
 `;
 
+Search.propTypes = {
+  setCurrentPage: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  getBusstopData: PropTypes.func.isRequired,
+};
+
 class Search extends Component {
-	constructor () {
-		super();
-		this.state = {
-			busstopNumber: '',
-			redirect: false,
-		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+  constructor() {
+    super();
+    this.state = {
+      busstopNumber: '',
+      redirect: false,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-	componentDidMount () {
-		const {
-			setCurrentPage,
-			history,
-		} = this.props;
-		setCurrentPage(history.location.pathname);
-	}
+  componentDidMount() {
+    const { setCurrentPage, history } = this.props;
+    setCurrentPage(history.location.pathname);
+  }
 
-	handleChange = (e) => {
-		this.setState({ busstopNumber: e.target.value });
-	}
+  handleChange = (e) => {
+    this.setState({ busstopNumber: e.target.value });
+  };
 
-	handleSubmit = async (e) => {
-		e.preventDefault();
-		const { busstopNumber } = this.state;
-		const { getBusstopData } = this.props;
-		await getBusstopData(busstopNumber);
-		await this.setState({ redirect: true });
-		// might want to handle error here
-		await this.setState({ busstopNumber: '' });
-	}
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const { busstopNumber } = this.state;
+    const { getBusstopData } = this.props;
+    await getBusstopData(busstopNumber);
+    await this.setState({ redirect: true });
+    // might want to handle error here
+    await this.setState({ busstopNumber: '' });
+  };
 
-	render () {
-		// const element = this.props.articles.map(el => (
-		// 	<div>
-		// 		<h1>{el.busstopNumber}</h1>
-		// 	</div>
-		// ))
+  render() {
+    // const element = this.props.articles.map(el => (
+    // 	<div>
+    // 		<h1>{el.busstopNumber}</h1>
+    // 	</div>
+    // ))
 
-		const {
-			busstopNumber,
-			redirect,
-		} = this.state;
-		return (
-			<CenteredDiv>
-				{ redirect && (
-					<Redirect
-						push
-						to={{
-							pathname: '/busstopinfo',
-							state: { referrer: busstopNumber }
-						}}
-					/>
-				)}
-				<StyledDiv onSubmit={this.handleSubmit}>
-					<h1>Bus APP</h1>
-					<Input
-						focus
-						placeholder='Enter bus stop number here'
-						value={busstopNumber}
-						onChange={this.handleChange}
-					 />
-					<br />
-					<Button content='Submit' />
-				</StyledDiv>
-			</CenteredDiv>
-		);
-	}
+    const { busstopNumber, redirect } = this.state;
+    return (
+      <CenteredDiv>
+        {redirect && (
+          <Redirect
+            push
+            to={{
+              pathname: '/busstopinfo',
+              state: { referrer: busstopNumber },
+            }}
+          />
+        )}
+        <StyledDiv onSubmit={this.handleSubmit}>
+          <h1>Bus APP</h1>
+          <Input
+            focus
+            placeholder="Enter bus stop number here"
+            value={busstopNumber}
+            onChange={this.handleChange}
+          />
+          <br />
+          <Button content="Submit" />
+        </StyledDiv>
+      </CenteredDiv>
+    );
+  }
 }
 
-const matchDispatchToProps = dispatch => ({
-	setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
-	getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber)),
+const matchDispatchToProps = (dispatch) => ({
+  setCurrentPage: (payload) => dispatch(setCurrentPage(payload)),
+  getBusstopData: (busstopNumber) => dispatch(getBusstopData(busstopNumber)),
 });
 
-export default connect(null, matchDispatchToProps)(Search);
+export default connect(
+  null,
+  matchDispatchToProps
+)(Search);

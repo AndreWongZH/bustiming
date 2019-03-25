@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import {
-  Responsive,
-  Visibility,
-  Segment,
-} from 'semantic-ui-react';
+import { Responsive, Visibility, Segment } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import HeaderBar from '../../Shared/HeaderBar';
 
+Homepage.propTypes = {
+  children: PropTypes.node,
+};
+
+Homepage.defaultProps = {
+  children: null,
+};
 class Homepage extends Component {
-  render () {
+  render() {
     const { children } = this.props;
 
     return (
@@ -19,7 +23,7 @@ class Homepage extends Component {
         >
           <Segment
             inverted
-            textAlign='center'
+            textAlign="center"
             style={{
               minHeight: 700,
               padding: '1em 0em',

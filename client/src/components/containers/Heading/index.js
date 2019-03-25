@@ -8,23 +8,33 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+Heading.propTypes = {
+  children: PropTypes.node,
+  currentPage: PropTypes.string.isRequired,
+  busInfoPage: PropTypes.shape({
+    number: PropTypes.string,
+    data: PropTypes.array,
+  }).isRequired,
+};
+
+Heading.defaultProps = {
+  children: null,
+};
 
 class Heading extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {};
   }
-  state = {}
+  state = {};
 
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
+  hideFixedMenu = () => this.setState({ fixed: false });
+  showFixedMenu = () => this.setState({ fixed: true });
 
-  render () {
-    const {
-      children,
-      currentPage,
-      busInfoPage,
-    } = this.props;
+  render() {
+    const { children, currentPage, busInfoPage } = this.props;
     const { fixed } = this.state;
 
     return (
@@ -39,23 +49,38 @@ class Heading extends Component {
             inverted={!fixed}
             pointing={!fixed}
             secondary={!fixed}
-            size='large'
+            size="large"
           >
             <Container>
-              <Link to='/search'>
-                <Menu.Item as='div' active={currentPage === '/search'}>Search</Menu.Item>
+              <Link to="/search">
+                <Menu.Item as="div" active={currentPage === '/search'}>
+                  Search
+                </Menu.Item>
               </Link>
-              <Link to='/bookmark'>
-                <Menu.Item as='div' active={currentPage === '/bookmark'}>Bookmarks</Menu.Item>
+              <Link to="/bookmark">
+                <Menu.Item as="div" active={currentPage === '/bookmark'}>
+                  Bookmarks
+                </Menu.Item>
               </Link>
-              { busInfoPage.number !== '' && (
-                <Link to='/busstopinfo'>
-                  <Menu.Item as='div' active={currentPage === '/busstopinfo'}>Bus-Stop Info</Menu.Item>
+              {busInfoPage.number !== '' && (
+                <Link to="/busstopinfo">
+                  <Menu.Item as="div" active={currentPage === '/busstopinfo'}>
+                    Bus-Stop Info
+                  </Menu.Item>
                 </Link>
               )}
-              <Menu.Item position='right'>
-                <Button as='a' inverted={!fixed}>Log in</Button>
-                <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Up</Button>
+              <Menu.Item position="right">
+                <Button as="a" inverted={!fixed}>
+                  Log in
+                </Button>
+                <Button
+                  as="a"
+                  inverted={!fixed}
+                  primary={fixed}
+                  style={{ marginLeft: '0.5em' }}
+                >
+                  Sign Up
+                </Button>
               </Menu.Item>
             </Container>
           </Menu>
@@ -66,11 +91,14 @@ class Heading extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     currentPage: state.currentPage,
     busInfoPage: state.busInfoPage,
   };
 };
 
-export default connect(mapStateToProps, null)(Heading);
+export default connect(
+  mapStateToProps,
+  null
+)(Heading);
