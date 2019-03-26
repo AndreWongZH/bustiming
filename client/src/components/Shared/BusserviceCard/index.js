@@ -1,13 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Header, Segment } from 'semantic-ui-react';
+import { Card, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { getTimeDifference } from './function';
 
-const StyledCard = styled.div`
+const StyledDiv = styled.div`
   margin: 30px 0;
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
 `;
 
 const BusserviceCard = ({ service }) => {
+  const dateNow = Date.now();
   const BusCards = Object.keys(service).map((key) => {
     if (key === 'NextBus' || key === 'NextBus2' || key === 'NextBus3') {
       const EstimatedArrival = service[key].EstimatedArrival
@@ -17,11 +23,17 @@ const BusserviceCard = ({ service }) => {
         ? service[key].DestinationCode
         : 'No Data';
       const BusRank = key.slice(-1) === 's' ? '1' : key.slice(-1);
+      const { seconds, minutes } = getTimeDifference(EstimatedArrival, dateNow);
+      const message = minutes
+        ? `Arriving in: ${minutes} ${
+            minutes === 1 ? 'Minute' : 'Mintues'
+          } and ${seconds} ${seconds === 1 ? 'Second' : 'Seconds'}`
+        : 'No Data';
       return (
         <Card key={key}>
           <Card.Content>
             <Card.Header>Bus {BusRank}</Card.Header>
-            <Card.Description>Arriving at: {EstimatedArrival}</Card.Description>
+            <Card.Description>{message}</Card.Description>
             <Card.Description>Ends at bus-stop: {EndStop}</Card.Description>
           </Card.Content>
         </Card>
@@ -30,14 +42,10 @@ const BusserviceCard = ({ service }) => {
     return null;
   });
   return (
-    <StyledCard>
-      <Header as="h2" attached="top">
-        Bus Number: {service.ServiceNo}
-      </Header>
-      <Segment attached>
-        <Card.Group itemsPerRow={3}>{BusCards}</Card.Group>
-      </Segment>
-    </StyledCard>
+    <StyledDiv>
+      <Header as="h2">Bus Number: {service.ServiceNo}</Header>
+      <Card.Group itemsPerRow={3}>{BusCards}</Card.Group>
+    </StyledDiv>
   );
 };
 

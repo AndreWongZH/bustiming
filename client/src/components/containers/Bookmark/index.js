@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { List } from 'semantic-ui-react';
+import { Table, Grid } from 'semantic-ui-react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { setCurrentPage, getBusstopData } from '../../../store/actions';
+import BusstopNumberBookmark from './BusstopNumberBookmark';
 
 const CenteredDiv = styled.div`
   padding: 1.5rem 0 2rem;
@@ -21,19 +22,6 @@ const StyledDiv = styled.div`
   flex-direction: column;
   padding: 2rem;
   margin-left: 0;
-`;
-
-const StyledBody = styled.div`
-  display: flex;
-  padding: 200px;
-  margin: 0 100px 0 10px;
-  background-color: lightgreen;
-  border-style: solid;
-  border-width: 3px;
-`;
-
-const StyledListContent = styled(List.Content)`
-  font-size: 28px;
 `;
 
 class Bookmark extends Component {
@@ -64,15 +52,6 @@ class Bookmark extends Component {
 
   render() {
     const { redirectTo, redirect } = this.state;
-    const { savedBusstop } = this.props;
-    const savedBusstopComponent = savedBusstop.map((busstopNumber) => (
-      <List.Item key={busstopNumber}>
-        <List.Icon name="bus" size="big" />
-        <StyledListContent onClick={this.handleClick}>
-          {busstopNumber}
-        </StyledListContent>
-      </List.Item>
-    ));
     return (
       <CenteredDiv>
         {redirect && (
@@ -86,9 +65,34 @@ class Bookmark extends Component {
         )}
         <StyledDiv>
           <h1>Bookmarks</h1>
-          <StyledBody>
-            <List divided>{savedBusstopComponent}</List>
-          </StyledBody>
+          <Grid columns={2} divided>
+            <Grid.Row>
+              <Grid.Column>
+                <BusstopNumberBookmark handleClick={this.handleClick} />
+              </Grid.Column>
+              <Grid.Column>
+                <Table celled>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Bus Number</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>12345</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+
+                  <Table.Footer>
+                    <Table.Row>
+                      <Table.HeaderCell colSpan="2" />
+                    </Table.Row>
+                  </Table.Footer>
+                </Table>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </StyledDiv>
       </CenteredDiv>
     );
@@ -99,12 +103,10 @@ Bookmark.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   getBusstopData: PropTypes.func.isRequired,
-  savedBusstop: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const matchStateToProps = (state) => {
   return {
-    savedBusstop: state.savedBusstop,
     busInfoPage: state.busInfoPage,
   };
 };

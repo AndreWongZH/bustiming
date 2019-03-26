@@ -29,13 +29,9 @@ const StyledDiv = styled.div`
   margin-left: 0;
 `;
 
-const StyledBody = styled.div`
-  display: flex;
-  padding: 10px;
-  margin: 0 100px 0 10px;
-  background-color: lightgreen;
-  border-style: solid;
-  border-width: 3px;
+const StyledGrid = styled.div`
+  width: 90%;
+  margin: 30px;
 `;
 
 const StyledIcon = styled(Icon)`
@@ -43,7 +39,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledButton = styled.div`
-  margin: 10px;
+  margin: 30px;
 `;
 
 class BusstopInfo extends Component {
@@ -95,9 +91,9 @@ class BusstopInfo extends Component {
             onClick={this.handleClick}
           />
         </StyledDiv>
-        <StyledBody>
+        <StyledGrid columns={1}>
           <Busservice data={data} />
-        </StyledBody>
+        </StyledGrid>
         <Link to="/search">
           <StyledButton>
             <Button>Search Another</Button>

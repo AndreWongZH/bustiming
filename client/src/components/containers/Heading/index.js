@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import busapplogo from '../../../public/busapplogo.svg';
 
 class Heading extends Component {
   constructor() {
@@ -39,6 +40,11 @@ class Heading extends Component {
             size="large"
           >
             <Container>
+              <Link to="/">
+                <Menu.Item as="div">
+                  <img src={busapplogo} alt="fail" />
+                </Menu.Item>
+              </Link>
               <Link to="/search">
                 <Menu.Item as="div" active={currentPage === '/search'}>
                   Search
