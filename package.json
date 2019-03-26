@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "npm": "6.7.0",
+    "node": "10.15.0"
+  },
   "scripts": {
     "start": "concurrently --names \"Backend:,Frontend:\" --prefix \"{name}-{time}\" \"node index.js\" \"cd client && npm start\"",
     "start backend": "node index.js",
