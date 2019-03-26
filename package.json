@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "go": "concurrently --names \"Backend:,Frontend:\" --prefix \"{name}-{time}\" \"nodemon index.js\" \"cd client && npm start\"",
-    "start": "node index.js",
+    "start": "concurrently --names \"Backend:,Frontend:\" --prefix \"{name}-{time}\" \"nodemon index.js\" \"cd client && npm start\"",
+    "start backend": "node index.js",
     "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
