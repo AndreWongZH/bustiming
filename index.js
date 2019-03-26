@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const PORT = 5000;
 
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -12,4 +11,9 @@ app.use((req, res, next) => {
 
 require('./routes/BusstopSearch')(app);
 
-app.listen(PORT, () => console.log('Backend Started'))
+
+let port = process.env.PORT;
+if (port == null || port == '') {
+    port = 5000
+}
+app.listen(port, () => console.log('Backend Started'))
