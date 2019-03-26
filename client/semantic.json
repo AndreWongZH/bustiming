@@ -16,7 +16,7 @@
     "clean": "dist/"
   },
   "permission": false,
-  "autoInstall": false,
+  "autoInstall": true,
   "rtl": "both",
   "components": [],
   "version": "2.4.2"
