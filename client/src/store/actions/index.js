@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios from '../../Core/Axios';
+
 import {
   SAVE_BUSSTOP,
   REMOVE_BUSSTOP,
@@ -22,7 +23,7 @@ export const setCurrentPage = (payload) => {
 export const getBusstopData = (busstopNumber) => {
   return (dispatch) => {
     axios
-      .get('http://localhost:5000/api/busstopNumber', {
+      .get('/api/busstopNumber', {
         params: {
           busstopNumber,
         },
