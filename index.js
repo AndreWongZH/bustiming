@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 require('./routes/BusstopSearch')(app);
 
 app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.get('/ping', function (req, res) {
  return res.send('pong');
 });
